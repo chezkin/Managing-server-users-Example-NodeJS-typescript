@@ -8,7 +8,9 @@ import { verify } from "@/middleware/auth-middleware";
 const router = express.Router();
 
 // Setup all routes for user
-router.get("/", verify, getUsers);
+router.get("/", getUsers);
+
+// router.post("/new-user", createUsers);
 
 // Setup all routes for user
 router.get("/error", errorUser);

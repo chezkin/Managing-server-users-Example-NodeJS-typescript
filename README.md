@@ -102,4 +102,4 @@ If you add extra folders to this template and would like to use them with aliase
 3. Go into ```package.json```
 4. Add extra paths inside of ```{_moduleAliases: ... }``` (for production build)
 
-# Managing-server-users-Example-NodeJS-typescript
+# serverMengerUsers-nodeTS
