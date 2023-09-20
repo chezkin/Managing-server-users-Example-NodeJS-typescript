@@ -1,7 +1,15 @@
 import express from "express";
 
 // Import controllers from
-import { errorUser, getUsers, createUser} from "@/controllers/user-controller";
+import { 
+    errorUser, 
+    getUsers, 
+    createUser,
+    getUserByID,
+    deleteUserByID,
+    loginUser,
+    updatedUser,
+} from "@/controllers/user-controller";
 import { verify } from "@/middleware/auth-middleware";
 
 // Setup router
@@ -10,7 +18,15 @@ const router = express.Router();
 // Setup all routes for user
 router.get("/", getUsers);
 
-router.post("/new-user", createUser);
+router.get("/:id", getUserByID);
+
+router.delete("/:id", deleteUserByID);
+
+router.post("/register", createUser);
+
+router.put("/update/:id", updatedUser);
+
+router.post("/login", loginUser);
 
 // Setup all routes for user
 router.get("/error", errorUser);

@@ -50,7 +50,7 @@ app.use(helmet());
 // Secure against param pollutions
 app.use(hpp());
 
-app.use(unless(["/users/new-user","/users/"], verify));
+app.use(unless(["/users/login"], verify));
 
 // Setup routing
 app.use("/users", user);
