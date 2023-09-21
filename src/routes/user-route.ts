@@ -9,8 +9,8 @@ import {
     deleteUserByID,
     loginUser,
     updatedUser,
-} from "@/controllers/user-controller";
-import { verify } from "@/middleware/auth-middleware";
+} from "../controllers/user-controller";
+import { verify } from "../middleware/auth-middleware";
 
 // Setup router
 const router = express.Router();

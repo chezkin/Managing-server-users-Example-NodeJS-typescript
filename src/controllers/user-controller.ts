@@ -1,17 +1,19 @@
 import { Request, Response, NextFunction } from "express";
-import { ApiSuccess } from "@/utils/ApiSucess";
-import { asyncHandler } from "@/middleware/async-middleware";
-import { User } from "dataBase/usersSchema";
-import { ApiError } from "@/utils/ApiError";
+import { ApiSuccess } from "../utils/ApiSucess";
+import { asyncHandler } from "../middleware/async-middleware";
+import { User } from "../dataBase/usersSchema";
+import { ApiError } from "../utils/ApiError";
 import service from "../service/user-service";
-import { errorResponse } from "@/middleware/error-middleware";
-import STATUS_CODES from "@/utils/StatusCodes";
+import { errorResponse } from "../middleware/error-middleware";
+import STATUS_CODES from "../utils/StatusCodes";
+import generateToken from "../utils/generateToken";
 
 
 
 export const getUsers = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     const users = await service.getUsers();
+    
     if (!users) { throw new ApiError({}, 500, "Something went wrong .... Please try again") }
     res.status(STATUS_CODES.OK).json(new ApiSuccess<User[]>(users, "Success!"));
   },
@@ -33,7 +35,8 @@ export const loginUser = asyncHandler(
     const {email , password} = req.body;
     const user = await service.loginUser(email , password);
     if (!user) { throw new ApiError({}, 500, "Something went wrong .... Please try again") }
-    res.status(STATUS_CODES.OK).json(new ApiSuccess<{user : User , token : string}>(user, "Success!"));
+    await generateToken(res, user._id);
+    res.status(STATUS_CODES.OK).json(new ApiSuccess<User>(user, "Success!"));
   },
 );
 

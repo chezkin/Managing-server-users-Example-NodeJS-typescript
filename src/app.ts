@@ -1,4 +1,5 @@
 // Import packages onto app
+
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
@@ -6,17 +7,19 @@ import helmet from "helmet";
 import hpp from "hpp";
 import morgan from "morgan";
 import rateLimit from "express-rate-limit";
+import cookieParser from 'cookie-parser';
 
 
-import { verify } from "@/middleware/auth-middleware";
+
+import { verify } from "./middleware/auth-middleware";
 import { unless } from "./middleware/unless";
 
 // Setup .env variables for app usage
 dotenv.config();
 
 // Import routes from the ./routes
-import user from "@/routes/user-route";
-import { connectDB } from "dataBase/conectMongoose";
+import user from "./routes/user-route";
+import { connectDB } from "./dataBase/conectMongoose";
 
 // Setup constant variables
 const PORT = process.env.PORT || 5000;
@@ -28,6 +31,9 @@ const app = express();
 
 // Body parser
 app.use(express.json());
+
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // Detailed server logging
 app.use(morgan("dev"));

@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction, RequestHandler } from "express";
-import { ApiError } from "@/types/interfaces/interfaces.common";
+import { ApiError } from "../types/interfaces/interfaces.common";
 import { errorResponse } from "./error-middleware";
 
 // @desc Handles async by resolving, and providing error handling to every request

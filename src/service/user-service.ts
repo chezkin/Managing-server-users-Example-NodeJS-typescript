@@ -1,9 +1,9 @@
 
-import { ApiError } from "@/utils/ApiError";
-import { User, UserModel } from "dataBase/usersSchema";
+import { ApiError } from "../utils/ApiError";
+import { User, UserModel } from "../dataBase/usersSchema";
 import { Document, Types } from "mongoose";
 import bcrypt from "bcrypt";
-import STATUS_CODES from "@/utils/StatusCodes";
+import STATUS_CODES from "../utils/StatusCodes";
 import Joi from 'joi';
 
 
@@ -105,9 +105,8 @@ const loginUser = async (email : string, password : string) => {
         throw new ApiError({}, STATUS_CODES.UNAUTHORIZED , "Incorrect password");
     }
 
-    // יצירת טוקן
-    const token = generateToken(user);
-    return { user, token };
+
+    return user;
 }
 
 
