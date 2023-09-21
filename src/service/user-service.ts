@@ -19,12 +19,14 @@ const getUsers = async () => {
 
 // פונקציה לקבלת משתמש לפי ID
 const getUserByID = async (id : string) => {    
-    const user: User | null = await UserModel.findById(id);
-    if (!user) {
-        throw new ApiError({}, STATUS_CODES.NOT_FOUND , "user not found");
-    }
-    return user;
-}
+       try {
+        const user: User | null = await UserModel.findOne({_id: id});
+        return user;
+       } 
+       catch (error){
+        throw new ApiError({error}, STATUS_CODES.NOT_FOUND , "user not found");
+       };
+};
 
 // פונקציה ליצירת משתמש חדש
 const createUser = async (user : User) => {  

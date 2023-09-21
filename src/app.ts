@@ -1,6 +1,6 @@
 // Import packages onto app
 
-import express from "express";
+import express, { NextFunction, Request, Response } from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import helmet from "helmet";
@@ -20,6 +20,8 @@ dotenv.config();
 // Import routes from the ./routes
 import user from "./routes/user-route";
 import { connectDB } from "./dataBase/conectMongoose";
+import { catchErrors, notFound } from "./middleware/errorNOTfound";
+import { ApiError } from "./utils/ApiError";
 
 // Setup constant variables
 const PORT = process.env.PORT || 5000;
@@ -60,6 +62,12 @@ app.use(unless(["/users/login"], verify));
 
 // Setup routing
 app.use("/users", user);
+
+
+app.use(notFound);
+
+app.use(catchErrors);
+
 
 // Listen to specified port in .env or default 5000
 connectDB().then((res) => {

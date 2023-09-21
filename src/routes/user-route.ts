@@ -9,6 +9,7 @@ import {
     deleteUserByID,
     loginUser,
     updatedUser,
+    logoutUser,
 } from "../controllers/user-controller";
 import { verify } from "../middleware/auth-middleware";
 
@@ -17,6 +18,8 @@ const router = express.Router();
 
 // Setup all routes for user
 router.get("/", getUsers);
+
+router.get("/logout", logoutUser);
 
 router.get("/:id", getUserByID);
 

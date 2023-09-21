@@ -20,9 +20,7 @@ export const getUsers = asyncHandler(
 );
 
 export const getUserByID = asyncHandler(
-  async (req: Request, res: Response, next: NextFunction) => {
-    console.log(req.params);
-    
+  async (req: Request, res: Response, next: NextFunction) => { 
     const userID = req.params.id
     const user = await service.getUserByID(userID);
     if (!user) { throw new ApiError({}, 500, "Something went wrong .... Please try again") }
@@ -60,13 +58,20 @@ export const updatedUser = asyncHandler(
 
 export const deleteUserByID = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    console.log(req.params);
     const userID = req.params.id
-
-    
     const user = await service.deleteUser(userID);
     if (!user) { throw new ApiError({}, 500, "Something went wrong .... Please try again") }
     res.status(STATUS_CODES.OK).json(new ApiSuccess<User>(user, `Success! user ${user.name} deleted`));
+  },
+);
+
+export const logoutUser = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction) => {
+    res.cookie('jwt', '', {
+      httpOnly: true,
+      expires: new Date(0),
+    });
+    res.status(STATUS_CODES.OK).json({ message: 'Logged out successfully' });
   },
 );
 
